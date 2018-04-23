@@ -8,7 +8,7 @@ from model_utils import greedy_decode
 from optimizer import LabelSmoothing
 from optimizer import NoamOpt
 from train import MyIterator
-from train import MultiGPULossCompute
+from train import SimpleLossCompute
 from train import batch_size_fn
 from train import run_epoch
 from train import rebatch
@@ -100,15 +100,14 @@ if __name__ == '__main__':
             )
         )
 
-        for epoch in range(0):
+        for epoch in range(1):
             model_par.train()
             run_epoch(
                 (rebatch(pad_idx, b) for b in train_iter),
                 model_par,
-                MultiGPULossCompute(
+                SimpleLossCompute(
                     model.generator,
                     criterion,
-                    devices = devices,
                     opt     = model_opt
                 )
             )
@@ -116,10 +115,9 @@ if __name__ == '__main__':
             loss = run_epoch(
                 (rebatch(pad_idx, b) for b in valid_iter),
                 model_par,
-                MultiGPULossCompute(
+                SimpleLossCompute(
                     model.generator,
                     criterion,
-                    devices = devices,
                     opt     = None
                 )
             )
