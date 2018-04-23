@@ -1,6 +1,10 @@
-import torch.nn as nn
-import copy
+import math
 import numpy as np
+import copy
+import torch
+import torch.nn as nn
+from torch.autograd import Variable
+import torch.nn.functional as F
 
 class Batch():
     """
