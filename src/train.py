@@ -1,3 +1,5 @@
+import time
+
 def run_epoch(data_iter, model, loss_compute):
     """
     Standard Training and Logging Function.
@@ -45,3 +47,29 @@ def batch_size_fn(new, count, sofar):
     tgt_elements     = count * max_tgt_in_batch
 
     return max(src_elements, tgt_elements)
+
+class SimpleLossCompute():
+    """
+    A simple loss compute and train function.
+    """
+    def __init__(self, generator, criterion, opt = None):
+        self.generator = generator
+        self.criterion = criterion
+        self.opt       = opt
+
+    def __call__(self, x, y, norm):
+        x    = self.generator(x)
+        loss = self.criterion(
+            x.contiguous().view(
+                -1,
+                x.size(-1)
+            ),
+            y.contiguous().view(-1)
+        ) / norm
+        loss.backward()
+
+        if self.opt is not None:
+            self.opt.step()
+            self.opt.optimizer.zero_grad()
+
+        return loss.data[0] * norm
