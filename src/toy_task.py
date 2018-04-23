@@ -53,7 +53,7 @@ if __name__ == '__main__':
         )
     )
 
-    for epoch in range(1):
+    for epoch in range(10):
         model.train()
         run_epoch(
             data_gen(
