@@ -5,6 +5,7 @@ from utils import Batch
 from optimizer import LabelSmoothing
 from optimizer import NoamOpt
 from model_utils import make_model
+from model_utils import greedy_decode
 from train import run_epoch
 from train import SimpleLossCompute
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
         )
     )
 
-    for epoch in range(10):
+    for epoch in range(1):
         model.train()
         run_epoch(
             data_gen(
@@ -81,3 +82,21 @@ if __name__ == '__main__':
                 )
             )
         )
+    model.eval()
+    src = Variable(
+        torch.LongTensor(
+            [
+                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            ]
+        )
+    )
+    src_mask = Variable(torch.ones(1, 1, 10))
+    print(
+        greedy_decode(
+            model,
+            src,
+            src_mask,
+            max_len = 10,
+            start_symbol = 1
+        )
+    )
