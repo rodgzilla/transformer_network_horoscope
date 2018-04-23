@@ -1,2 +1,7 @@
 /src/__pycache__/layers.cpython-36.pyc
 *.pyc
+/src/.data/iwslt/de-en.tgz
+/*.de
+/*.de
+/src/.data/iwslt/de-en/IWSLT16.TED.dev2010.de-en.de
+/src/.data/iwslt/de-en/IWSLT16.TED.dev2010.de-en.de.xml
