@@ -100,7 +100,7 @@ if __name__ == '__main__':
             )
         )
 
-        for epoch in range(1):
+        for epoch in range(0):
             model_par.train()
             run_epoch(
                 (rebatch(pad_idx, b) for b in train_iter),
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     else:
         model = torch.load('iwslt.pt')
 
-    for i, batch in enumerate(valid_iter):
+    for batch_idx, batch in enumerate(valid_iter):
         src = batch.src.transpose(0, 1)[:1]
         src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
         out = greedy_decode(
@@ -145,13 +145,13 @@ if __name__ == '__main__':
             if sym == '</s>':
                 break
             print(sym, end = ' ')
-            print()
-            print('Target:', end = '\t')
-            for i in range(1, batch.trg.size(0)):
-                sym = TGT.vocab.itos[batch.trg.data[i, 0]]
-                if sym == '</s>':
-                    break
-                print(sym, end = ' ')
-            print()
-            if i == 5:
+        print()
+        print('Target:', end = '\t')
+        for i in range(1, batch.trg.size(0)):
+            sym = TGT.vocab.itos[batch.trg.data[i, 0]]
+            if sym == '</s>':
                 break
+            print(sym, end = ' ')
+        print()
+        if batch_idx == 5:
+            break
