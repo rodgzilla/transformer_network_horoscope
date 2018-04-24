@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 from torch.autograd import Variable
-from utils import Batch
+from train import Batch
 from optimizer import LabelSmoothing
 from optimizer import NoamOpt
 from model_utils import make_model
