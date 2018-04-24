@@ -66,7 +66,7 @@ if __name__ == '__main__':
             smoothing   = 0.1
         )
         criterion.cuda()
-        BATCH_SIZE = 1000
+        BATCH_SIZE = 1500
         train_iter = MyIterator(
             train,
             batch_size    = BATCH_SIZE,
