@@ -46,6 +46,9 @@ def make_batch(text_idx, window_size):
         text_idx[i: i + window_size]
         for i in range(1, len(text_idx) - window_size)
     ])
+    shuffle_idx = np.random.permutation(src.shape[0])
+    src         = src[idx]
+    tgt         = tgt[idx]
 
     return src, tgt
 
